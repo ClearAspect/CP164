@@ -8,7 +8,7 @@ Email:   dbrown@wlu.ca
 __updated__ = "2023-05-15"
 -------------------------------------------------------
 """
-import Food.Food
+from Food import Food
 
 
 def get_food():
@@ -25,8 +25,13 @@ def get_food():
     # Your code here
 
     name = input("Name: ")
-    print("Origin")
-
+    origin = int(input(f"Origin\n{Food.origins()}: "))
+    response = input("Vegetarian (Y/N): ")
+    if response.lower() == "y":
+        is_vegetarian = True
+    else:
+        is_vegetarian = False
+    calories = int(input("Calories: "))
     food = Food(name, origin, is_vegetarian, calories)
     return food
 
@@ -44,9 +49,16 @@ def read_food(line):
         food - contains the data from line (Food)
     -------------------------------------------------------
     """
-
+    
+    food_compenents = line.split("|")
+    
+    name = food_compenents[0]
+    origin = int(food_compenents[1])
+    is_vegetarian = eval(food_compenents[2])
+    calories = int(food_compenents[3])
+    
     # Your code here
-
+    food = Food(name, origin, is_vegetarian, calories)
     return food
 
 
@@ -65,6 +77,10 @@ def read_foods(file_variable):
 
     # Your code here
 
+    foods = []
+    for line in file_variable:
+        foods.append(read_food(line))
+    
     return foods
 
 
@@ -86,7 +102,13 @@ def write_foods(file_variable, foods):
     """
 
     # Your code here
-
+    
+    file_string = ""
+    food_string = ""
+    
+    for food in foods:
+        food_string = f"{food.name}|{food.origin}|{food.is_vegetarian}|{food.calories}\n"
+        file_variable.write(food_string)
     return
 
 
@@ -105,6 +127,10 @@ def get_vegetarian(foods):
     """
 
     # Your code here
+    veggies = []
+    for food in foods:
+        if food.is_vegetarian:
+            veggies.append(food)
 
     return veggies
 

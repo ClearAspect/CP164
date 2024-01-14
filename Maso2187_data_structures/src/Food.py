@@ -96,10 +96,10 @@ class Food:
         # your code here
 
         string = f"""
-        {{Name:}:<11} {self.name}
-        {{Origin:}:<11} {Food.ORIGIN[self.origin]}
-        {{Vegetarian:}:<11} {self.is_vegetarian}
-        {{Calories:}:<11} {self.calories}
+        {'Name:':<11} {self.name}
+        {'Origin:':<11} {Food.ORIGIN[self.origin]}
+        {'Vegetarian:':<11} {self.is_vegetarian}
+        {'Calories:':<11} {self.calories}
         """
         return string
 

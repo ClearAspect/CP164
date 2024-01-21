@@ -9,6 +9,7 @@ __updated__ = "2023-05-15"
 -------------------------------------------------------
 """
 from Food import Food
+from copy import deepcopy
 
 
 def get_food():
@@ -153,7 +154,11 @@ def by_origin(foods, origin):
     assert origin in range(len(Food.ORIGIN))
 
     # Your code here
-
+    
+    origins = []
+    for food in foods:
+        if food.origin == origin:
+            origins.append(food)
     return origins
 
 
@@ -172,7 +177,14 @@ def average_calories(foods):
     """
 
     # Your code here
-
+    total_calories = 0
+    for food in foods:
+        total_calories += food.calories
+    
+    if len(foods) > 0:
+        avg = total_calories // len(foods)
+    else:
+        avg = 0        
     return avg
 
 
@@ -193,7 +205,8 @@ def calories_by_origin(foods, origin):
     assert origin in range(len(Food.ORIGIN))
 
     # Your code here
-
+    origin_foods = by_origin(foods, origin)
+    avg = average_calories(origin_foods)
     return avg
 
 
@@ -212,7 +225,18 @@ def food_table(foods):
     """
 
     # Your code here
+    header = f"{'Food':<36}{'Origin':<13}{'Vegetarian':<11}{'Calories':<8}"    
+    separator = "----------------------------------- ------------ ---------- --------"
+    print(header)
+    print(separator)
 
+    # Sorting the foods list in-place based on the name
+    foods = deepcopy(foods)
+    foods.sort()
+
+    for food in foods:
+        food_row = f"{food.name:<36}{Food.ORIGIN[food.origin]:<13}{str(food.is_vegetarian):>10}{str(food.calories):>9}"
+        print(food_row)
     return
 
 
@@ -236,5 +260,10 @@ def food_search(foods, origin, max_cals, is_veg):
     assert origin in range(-1, len(Food.ORIGIN))
 
     # Your code here
-
+    result = []
+    for food in foods:
+        if (origin == -1 or food.origin == origin) and \
+           (max_cals == 0 or food.calories <= max_cals) and \
+           (is_veg is None or food.is_vegetarian == is_veg):
+            result.append(food)
     return result

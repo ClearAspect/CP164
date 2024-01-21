@@ -49,14 +49,14 @@ def read_food(line):
         food - contains the data from line (Food)
     -------------------------------------------------------
     """
-    
+
     food_compenents = line.split("|")
-    
+
     name = food_compenents[0]
     origin = int(food_compenents[1])
     is_vegetarian = eval(food_compenents[2])
     calories = int(food_compenents[3])
-    
+
     # Your code here
     food = Food(name, origin, is_vegetarian, calories)
     return food
@@ -80,7 +80,7 @@ def read_foods(file_variable):
     foods = []
     for line in file_variable:
         foods.append(read_food(line))
-    
+
     return foods
 
 
@@ -102,12 +102,13 @@ def write_foods(file_variable, foods):
     """
 
     # Your code here
-    
-    file_string = ""
+
     food_string = ""
-    
+
     for food in foods:
-        food_string = f"{food.name}|{food.origin}|{food.is_vegetarian}|{food.calories}\n"
+        food_string = (
+            f"{food.name}|{food.origin}|{food.is_vegetarian}|{food.calories}\n"
+        )
         file_variable.write(food_string)
     return
 

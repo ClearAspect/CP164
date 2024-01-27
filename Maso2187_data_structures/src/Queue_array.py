@@ -77,6 +77,7 @@ class Queue:
         """
 
         # your code here
+        self._values.append(deepcopy(value))
 
         return
 
@@ -95,7 +96,7 @@ class Queue:
 
         # your code here
 
-        return value
+        return self._values.pop(0)
 
     def peek(self):
         """
@@ -112,7 +113,7 @@ class Queue:
 
         # your code here
 
-        return value
+        return deepcopy(self._values[0])
 
     def __iter__(self):
         """

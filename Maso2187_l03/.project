@@ -3,6 +3,7 @@
 	<name>Maso2187_l03</name>
 	<comment></comment>
 	<projects>
+		<project>Maso2187_data_structures</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

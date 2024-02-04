@@ -95,12 +95,7 @@ class Food:
 
         # your code here
 
-        string = f"""
-        {'Name:':<11} {self.name}
-        {'Origin:':<11} {Food.ORIGIN[self.origin]}
-        {'Vegetarian:':<11} {self.is_vegetarian}
-        {'Calories:':<11} {self.calories}
-        """
+        string = f"{'Name:':<11} {self.name}\n{'Origin:':<11} {Food.ORIGIN[self.origin]}\n{'Vegetarian:':<11} {self.is_vegetarian}\n{'Calories:':<11} {self.calories}"
         return string
 
     def __eq__(self, target):

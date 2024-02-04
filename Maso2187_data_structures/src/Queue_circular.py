@@ -1,67 +1,88 @@
 """
 -------------------------------------------------------
-Array version of the Queue ADT.
+Circular array version of the Queue ADT.
 -------------------------------------------------------
 Author:  David Brown
-ID:      999999999
+ID:      123456789
 Email:   dbrown@wlu.ca
-Section: CP164 C
-__updated__ = "2019-04-27"
+__updated__ = "2023-05-07"
 -------------------------------------------------------
 """
+# pylint: disable=protected-access
+
 from copy import deepcopy
-from pickle import TRUE
 
 
 class Queue:
-    def __init__(self):
+    """
+    -------------------------------------------------------
+    Constants
+    -------------------------------------------------------
+    """
+
+    # a default maximum size when one is not provided
+    DEFAULT_CAPACITY = 10
+
+    def __init__(self, capacity=DEFAULT_CAPACITY):
         """
         -------------------------------------------------------
-        Initializes an empty queue. Data is stored in a Python list.
-        Use: queue = Queue()
+        Initializes an empty queue. Data is stored in a fixed-size list.
+        Use: target = Queue(capacity)
+        Use: target = Queue()  # uses default capacity
         -------------------------------------------------------
+        Parameters:
+            capacity - maximum size of the queue (int > 0)
         Returns:
             a new Queue object (Queue)
         -------------------------------------------------------
         """
-        self._values = []
+        assert capacity > 0, "Queue size must be > 0"
+
+        self._capacity = capacity
+        self._values = [None] * self._capacity
+        self._front = None  # queue has no data
+        self._rear = 0  # first available index for insertion
+        self._count = 0  # number of data items
 
     def is_empty(self):
         """
         -------------------------------------------------------
         Determines if the queue is empty.
-        Use: b = queue.is_empty()
+        Use: empty = source.is_empty()
         -------------------------------------------------------
         Returns:
-            True if queue is empty, False otherwise.
+            True if the queue is empty, False otherwise.
         -------------------------------------------------------
         """
-        return len(self._values) == 0
+        # your code here
+
+        return self._front == None
 
     def is_full(self):
         """
         -------------------------------------------------------
-        Determines if the queue is full. (Given the expandable nature
-        of the Python list _values, the queue is never full.)
-        Use: b = queue.is_full()
+        Determines if the queue is full.
+        Use: full = source.is_full()
         -------------------------------------------------------
         Returns:
-            True if queue is full, False otherwise.
+            True if the queue is full, False otherwise.
         -------------------------------------------------------
         """
-        return False
+        # your code here
+        return self._rear == None
 
     def __len__(self):
         """
         -------------------------------------------------------
         Returns the length of the queue.
-        Use: n = len(queue)
+        Use: n = len(source)
         -------------------------------------------------------
         Returns:
-            the number of values in queue.
+            the number of values in the queue.
         -------------------------------------------------------
         """
-        return len(self._values)
+        # your code here
+        return self._count
 
     def __eq__(self, target):
         """
@@ -78,15 +99,17 @@ class Queue:
                 as target in the same order, otherwise False. (boolean)
         ---------------
         """
+        # your code here
         equals = True
-        
-        if len(self._values) != len(target._values):
+        if self._count != target._count:
             equals = False
         else:
-            for i in range(len(self._values)):
-                if self._values[i] != target._values[i]:
+            for i in range(self._count):
+                index_self = (self._front + i) % self._capacity
+                index_target = (target._front + i) % target._capacity
+                if self._values[index_self] != target._values[index_target]:
                     equals = False
-                    i = len(self._values)
+                    i = self._count
 
         return equals
 
@@ -94,7 +117,7 @@ class Queue:
         """
         -------------------------------------------------------
         Adds a copy of value to the rear of the queue.
-        Use: queue.insert(value)
+        Use: source.insert( value )
         -------------------------------------------------------
         Parameters:
             value - a data element (?)
@@ -102,9 +125,23 @@ class Queue:
             None
         -------------------------------------------------------
         """
+        assert self._rear is not None, "Cannot add to a full queue"
 
         # your code here
-        self._values.append(deepcopy(value))
+
+        if self.is_empty():
+            self._front = self._rear
+
+        # Increase count of values
+        self._count += 1
+        # Copy value to rear
+        self._values[self._rear] = deepcopy(value)
+        # Move rear if possible
+
+        self._rear = (self._rear + 1) % self._capacity
+
+        if self._rear == self._front:
+            self._rear = None
 
         return
 
@@ -112,73 +149,63 @@ class Queue:
         """
         -------------------------------------------------------
         Removes and returns value from the queue.
-        Use: value = queue.remove()
+        Use: v = source.remove()
         -------------------------------------------------------
         Returns:
             value - the value at the front of the queue - the value is
-            removed from queue (?)
+                removed from the queue (?)
         -------------------------------------------------------
         """
-        assert len(self._values) > 0, "Cannot remove from an empty queue"
+        assert self._front is not None, "Cannot remove from an empty queue"
 
         # your code here
 
-        return self._values.pop(0)
+        value = self._values[self._front]
+        self._values[self._front] = None
+        self._count -= 1
+
+        self._front = (self._front + 1) % self._capacity
+
+        if self._front == self._rear:
+            self._front = None
+
+        return value
 
     def peek(self):
         """
         -------------------------------------------------------
         Peeks at the front of queue.
-        Use: value = queue.peek()
+        Use: v = source.peek()
         -------------------------------------------------------
         Returns:
-            value - a copy of the value at the front of queue -
-            the value is not removed from queue (?)
+            value - a copy of the value at the front of the queue -
+                the value is not removed from the queue (?)
         -------------------------------------------------------
         """
-        assert len(self._values) > 0, "Cannot peek at an empty queue"
+        assert self._count > 0, "Cannot peek at an empty queue"
 
         # your code here
-
-        return deepcopy(self._values[0])
+        value = deepcopy(self._values[self._front])
+        return value
 
     def __iter__(self):
         """
-        FOR TESTING ONLY
+        USE FOR TESTING ONLY
         -------------------------------------------------------
         Generates a Python iterator. Iterates through the queue
         from front to rear.
-        Use: for value in queue:
+        Use: for v in cq:
         -------------------------------------------------------
         Returns:
             value - the next value in the queue (?)
         -------------------------------------------------------
         """
-        for value in self._values:
-            yield value
-    def split_alt(self):
-        """
-        -------------------------------------------------------
-        Splits the source queue into separate target queues with values
-        alternating into the targets. At finish source queue is empty.
-        Order of source values is preserved.
-        (iterative algorithm)
-        Use: target1, target2 = source.split_alt()
-        -------------------------------------------------------
-        Returns:
-            target1 - contains alternating values from source (Queue)
-            target2 - contains remaining values from source (Queue)
-        -------------------------------------------------------
-        """
-        
-        target1 = Queue()
-        target2 = Queue()
-    
-        for i in range(len(self._values)):
-            if i % 2 == 0:
-                target1._values.append(self._values.pop(0))
-            else:
-                target2._values.append(self._values.pop(0))
-                
-        return target1, target2
-        
+        if self._front is not None:
+            # queue is not empty
+            j = self._front
+            i = 0
+
+            while i < self._count:
+                yield self._values[j]
+                i += 1
+                j = (j + 1) % self._capacity

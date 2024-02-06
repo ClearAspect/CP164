@@ -8,6 +8,7 @@ Email:   maso2187@mylaurier.ca
 __updated__ = "2024-01-27"
 -------------------------------------------------------
 """
+
 # Imports
 from Stack_array import Stack
 from utilities import array_to_stack, stack_to_array
@@ -124,7 +125,8 @@ def postfix(string):
                 stack.push(operand1 * operand2)
             elif element == "/":
                 stack.push(operand1 / operand2)
-    return stack.pop()
+    answer = stack.pop()
+    return answer
 
 
 def stack_maze(maze):
@@ -159,7 +161,7 @@ def stack_maze(maze):
             path.append(current_location)
 
             if current_location == "X":
-                return path
+                return path[1:]
 
             branches = maze[current_location]
 

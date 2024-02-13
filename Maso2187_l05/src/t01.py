@@ -13,3 +13,6 @@ __updated__ = "2024-02-06"
 from functions import recurse
 
 # Constants
+
+ans = recurse(10, 10)
+print(ans)

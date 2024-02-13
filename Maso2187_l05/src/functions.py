@@ -151,12 +151,11 @@ def bag_to_set(bag):
     -------------------------------------------------------
     """
 
-    new_set = []
-    value = None
-    if len(bag) > 0:
-        value = bag.pop(0)
-        if not (value in new_set):
-            new_set.append(value)
-        new_set.extend(bag_to_set(bag))
+    if len(bag) == 0:
+        new_set = []
+    else:
+        new_set = bag_to_set(bag[:-1])
+        if bag[-1] not in new_set:
+            new_set.append(bag[-1])
 
     return new_set

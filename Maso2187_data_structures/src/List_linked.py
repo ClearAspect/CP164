@@ -8,6 +8,7 @@ Email:   dbrown@wlu.ca
 __updated__ = "2023-07-31"
 -------------------------------------------------------
 """
+
 from copy import deepcopy
 
 
@@ -58,7 +59,7 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        return self._count == 0
 
     def __len__(self):
         """
@@ -71,7 +72,7 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        return self._count
 
     def prepend(self, value):
         """
@@ -86,6 +87,14 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        self._front = _List_Node(value, self._front)
+
+        if self._count == 0:
+            self._rear = self._front
+
+        self._count += 1
+
         return
 
     def append(self, value):
@@ -101,13 +110,23 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        if self._count == 0:
+            self._front = _List_Node(value, None)
+            self._rear = self._front
+        else:
+            self._rear._next = _List_Node(value, None)
+            self._rear = self._rear._next
+
+        self._count += 1
+
         return
 
     def insert(self, i, value):
         """
         -------------------------------------------------------
         A copy of value is added to index i, following values are pushed right.
-        If i outside of range of -len(list) to len(list) - 1, the value is 
+        If i outside of range of -len(list) to len(list) - 1, the value is
         prepended or appended as appropriate.
         Use: lst.insert(i, value)
         -------------------------------------------------------
@@ -119,6 +138,28 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        if i > self._count - 1:
+            self.append(value)
+        elif i <= 0:
+            self.prepend(value)
+        else:
+            if i < 0:
+                i = self._count + i
+
+            previous = None
+            current = self._front
+
+            j = 0
+
+            while j < i:
+                previous = current
+                current = current._next
+                j += 1
+
+            previous._next = _List_Node(value, current)
+            self._count += 1
+
         return
 
     def _linear_search(self, key):
@@ -138,7 +179,20 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+
+        current = self._front
+        previous = None
+        index = 0
+
+        while current is not None and current._value != key:
+            previous = current
+            current = current._next
+            index += 1
+
+        if current is None:
+            index = -1
+
+        return previous, current, index
 
     def remove(self, key):
         """
@@ -198,7 +252,12 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        previous, current, index = self._linear_search(key)
+        value = None
+        if current is not None:
+            value = current._value
+
+        return value
 
     def peek(self):
         """
@@ -275,7 +334,7 @@ class List:
             i - index of the element to access (int)
             value - a data value (?)
         Returns:
-            The i-th element of list contains a copy of value. The 
+            The i-th element of list contains a copy of value. The
                 existing value at i is overwritten.
         -------------------------------------------------------
         """
@@ -342,7 +401,8 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        number = self._count
+        return number
 
     def reverse(self):
         """
@@ -377,8 +437,8 @@ class List:
     def clean(self):
         """
         ---------------------------------------------------------
-        Removes duplicates from the list. The list contains 
-        one and only one of each value formerly present in the list. 
+        Removes duplicates from the list. The list contains
+        one and only one of each value formerly present in the list.
         The first occurrence of each value is preserved.
         Use: source.clean()
         -------------------------------------------------------
@@ -400,8 +460,8 @@ class List:
             args - an array of arguments (tuple of int)
             args[0], if it exists, is the index i
         Returns:
-            value - if args exists, the value at position args[0], 
-                otherwise the last value in the list, value is 
+            value - if args exists, the value at position args[0],
+                otherwise the last value in the list, value is
                 removed from the list (?)
         -------------------------------------------------------
         """
@@ -455,7 +515,7 @@ class List:
     def _swap(self, pln, prn):
         """
         -------------------------------------------------------
-        Swaps the position of two nodes. The nodes in pln.next and prn.next 
+        Swaps the position of two nodes. The nodes in pln.next and prn.next
         have been swapped, and all links to them updated.
         Use: self._swap(pln, prn)
         -------------------------------------------------------
@@ -490,14 +550,14 @@ class List:
     def identical_r(self, other):
         """
         ---------------------------------------------------------
-        Determines whether two lists are identical. 
+        Determines whether two lists are identical.
         (recursive version)
         Use: b = lst.identical_r(other)
         -------------------------------------------------------
         Parameters:
             rs - another list (List)
         Returns:
-            identical - True if this list contains the same values 
+            identical - True if this list contains the same values
                 as other in the same order, otherwise False.
         -------------------------------------------------------
         """
@@ -522,7 +582,7 @@ class List:
     def split_alt(self):
         """
         -------------------------------------------------------
-        Splits the source list into separate target lists with values 
+        Splits the source list into separate target lists with values
         alternating into the targets. At finish source self is empty.
         Order of source values is preserved.
         (iterative algorithm)
@@ -740,8 +800,7 @@ class List:
             its count is updated. The source List front and count are updated.
         -------------------------------------------------------
         """
-        assert source._front is not None, \
-            "Cannot move the front of an empty List"
+        assert source._front is not None, "Cannot move the front of an empty List"
 
         # your code here
         return
@@ -760,8 +819,7 @@ class List:
             its count is updated. The source List front and count are updated.
         -------------------------------------------------------
         """
-        assert source._front is not None, \
-            "Cannot move the front of an empty List"
+        assert source._front is not None, "Cannot move the front of an empty List"
 
         # your code here
         return
@@ -769,8 +827,8 @@ class List:
     def combine(self, source1, source2):
         """
         -------------------------------------------------------
-        Combines two source lists into the current target list. 
-        At finish, the contents of source1 and source2 are interlaced 
+        Combines two source lists into the current target list.
+        At finish, the contents of source1 and source2 are interlaced
         into target and source1 and source2 are empty.
         Order of source values is preserved.
         (iterative algorithm)
@@ -789,8 +847,8 @@ class List:
     def combine_r(self, source1, source2):
         """
         -------------------------------------------------------
-        Combines two source lists into the current target list. 
-        When finished, the contents of source1 and source2 are interlaced 
+        Combines two source lists into the current target list.
+        When finished, the contents of source1 and source2 are interlaced
         into target and source1 and source2 are empty.
         Order of source values is preserved.
         (recursive algorithm)

@@ -13,7 +13,6 @@ from copy import deepcopy
 
 
 class _List_Node:
-
     def __init__(self, value, next_):
         """
         -------------------------------------------------------
@@ -28,12 +27,12 @@ class _List_Node:
             a new _List_Node object (_List_Node)
         -------------------------------------------------------
         """
+
         self._value = deepcopy(value)
         self._next = next_
 
 
 class List:
-
     def __init__(self):
         """
         -------------------------------------------------------
@@ -207,7 +206,28 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        previous, current, index = self._linear_search(key)
+        value = None
+        if current is not None:
+            # case of one item
+            if self._count == 1:
+                self._front = None
+                self._rear = None
+            # case of first item
+            elif previous == None:
+                self._front = current._next
+            # case of last item
+            elif current._next == None:
+                self._rear = previous
+                previous._next = None
+            # normal case
+            else:
+                previous._next = current._next
+
+            self._count -= 1
+            value = current._value
+
+        return value
 
     def remove_front(self):
         """
@@ -272,7 +292,7 @@ class List:
         assert self._front is not None, "Cannot peek at an empty list"
 
         # your code here
-        return
+        return deepcopy(self._front._value)
 
     def index(self, key):
         """
@@ -288,7 +308,8 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        previous, current, index = self._linear_search(key)
+        return index
 
     def _is_valid_index(self, i):
         """
@@ -322,7 +343,16 @@ class List:
         assert self._is_valid_index(i), "Invalid index value"
 
         # your code here
-        return
+        current = self._front
+        if i >= 0:
+            a = 0
+        else:
+            a = -1 * self._count
+        while a < i:
+            current = current._next
+            a += 1
+        value = deepcopy(current._value)
+        return value
 
     def __setitem__(self, i, value):
         """
@@ -341,6 +371,15 @@ class List:
         assert self._is_valid_index(i), "Invalid index value"
 
         # your code here
+        current = self._front
+        if i >= 0:
+            a = 0
+        else:
+            a = -1 * self._count
+        while a < i:
+            current = current._next
+            a += 1
+        current._value = deepcopy(value)
         return
 
     def __contains__(self, key):
@@ -356,7 +395,8 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        previous, current, index = self._linear_search(key)
+        return index != -1
 
     def max(self):
         """
@@ -371,7 +411,14 @@ class List:
         assert self._front is not None, "Cannot find maximum of an empty list"
 
         # your code here
-        return
+        current = self._front
+        max_data = current._value
+        while current is not None:
+            if current._value > max_data:
+                max_data = current._value
+            current = current._next
+
+        return deepcopy(max_data)
 
     def min(self):
         """
@@ -386,7 +433,14 @@ class List:
         assert self._front is not None, "Cannot find maximum of an empty list"
 
         # your code here
-        return
+        current = self._front
+        min_data = current._value
+        while current is not None:
+            if current._value < min_data:
+                min_data = current._value
+            current = current._next
+
+        return deepcopy(min_data)
 
     def count(self, key):
         """
@@ -401,7 +455,13 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        number = self._count
+        number = 0
+        previous, current, index = self._linear_search(key)
+        if index != -1:
+            while current != None:
+                if current._value == key:
+                    number += 1
+                current = current._next
         return number
 
     def reverse(self):
@@ -472,7 +532,6 @@ class List:
         current = self._front
 
         if len(args) == 1:
-
             if args[0] < 0:
                 # index is negative
                 n = self._count + args[0]

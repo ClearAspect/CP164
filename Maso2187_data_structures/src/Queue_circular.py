@@ -8,6 +8,7 @@ Email:   dbrown@wlu.ca
 __updated__ = "2023-05-07"
 -------------------------------------------------------
 """
+
 # pylint: disable=protected-access
 
 from copy import deepcopy

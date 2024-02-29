@@ -690,8 +690,50 @@ class List:
             index - index of the node containing key, -1 if key not found (int)
         -------------------------------------------------------
         """
+
+        current = self._front
+        previous = None
+        index = 0
+
+        if current is None:
+            index = -1
+        else:
+            previous, current, index = self._linear_search_r_aux(
+                key, current, previous, index
+            )
+
+        return previous, current, index
+
+    def _linear_search_r_aux(self, key, current, previous, index):
+        """
+        -------------------------------------------------------
+        Auxiliary function for _linear_search_r
+        -------------------------------------------------------
+        Parameters:
+            key - a partial data element (?)
+            current - the current node (_List_Node)
+            previous - the previous node (_List_Node)
+            index - index of the current node (int)
+        Returns:
+            previous - pointer to the node previous to the node containing key (_List_Node)
+            current - pointer to the node containing key (_List_Node)
+            index - index of the node containing key, -1 if key not found (int)
+        -------------------------------------------------------
+        """
         # your code here
-        return
+
+        if current is not None and current._value != key:
+            previous = current
+            current = current._next
+            index += 1
+            previous, current, index = self._linear_search_r_aux(
+                key, current, previous, index
+            )
+
+        if current is None:
+            index = -1
+
+        return previous, current, index
 
     def intersection(self, source1, source2):
         """

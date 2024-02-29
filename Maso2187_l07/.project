@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>a06</name>
+	<name>Maso2187_l07</name>
 	<comment></comment>
 	<projects>
+		<project>Maso2187_data_structures</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

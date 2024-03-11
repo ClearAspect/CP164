@@ -10,6 +10,7 @@ __updated__ = "2023-07-31"
 """
 
 from copy import deepcopy
+import math
 
 
 class _List_Node:
@@ -242,7 +243,19 @@ class List:
         assert self._front is not None, "Cannot remove from an empty list"
 
         # your code here
-        return
+
+        value = self._front._value
+
+        if self._count == 1:
+            self._front = None
+            self._rear = None
+
+        else:
+            self._front = self._front._next
+
+        self._count -= 1
+
+        return value
 
     def remove_many(self, key):
         """
@@ -257,6 +270,10 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        while self._linear_search(key)[1] is not None:
+            self.remove(key)
+
         return
 
     def find(self, key):
@@ -541,6 +558,22 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        previous = None
+        current = self._front
+        values = []
+
+        while current is not None:
+            if current._value in values:
+                previous._next = current._next
+                self._count -= 1
+                if current._next is None:
+                    self._rear = previous
+            else:
+                values.append(current._value)
+                previous = current
+            current = current._next
+
         return
 
     def pop(self, *args):
@@ -638,7 +671,21 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+        equals = False
+
+        if self._count == target._count:
+            source_node = self._front
+            target_node = target._front
+            equals = True
+
+            while source_node is not None and equals:
+                if source_node._value == target_node._value:
+                    source_node = source_node._next
+                    target_node = target_node._next
+                else:
+                    equals = False
+
+        return equals
 
     def is_identical(self, target):
         """
@@ -729,7 +776,18 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+
+        target1 = List()
+        target2 = List()
+        mid = math.ceil(self._count / 2)
+
+        for i in range(mid):
+            target1._move_front_to_rear(self)
+
+        while self._front is not None:
+            target2._move_front_to_rear(self)
+
+        return target1, target2
 
     def split_alt(self):
         """
@@ -1184,6 +1242,22 @@ class List:
         -------------------------------------------------------
         """
         # your code here
+
+        smallest = source1._count
+
+        if source1._count > source2._count:
+            smallest = source2._count
+
+        for i in range(smallest):
+            self._move_front_to_rear(source1)
+            self._move_front_to_rear(source2)
+
+        while source1._count > 0:
+            self._move_front_to_rear(source1)
+
+        while source2._count > 0:
+            self._move_front_to_rear(source2)
+
         return
 
     def combine_r(self, source1, source2):

@@ -118,7 +118,7 @@ class Priority_Queue:
     def _set_first(self):
         """
         -------------------------------------------------------
-        Private helper function to set the value of _first.
+        Private helper functions to set the value of _first.
         _first is the index of the value with the highest
         priority in the priority queue. None if queue is empty.
         Use: self._set_first()

@@ -529,7 +529,7 @@ class List:
     def _reverse_r_aux(self, previous, current):
         """
         ---------------------------------------------------------
-        Auxiliary function for reverse_r
+        Auxiliary functions for reverse_r
         ---------------------------------------------------------
         Parameters:
             current - a List_Node (List_Node)
@@ -743,7 +743,7 @@ class List:
     def _is_identical_r_aux(self, source_node, target_node):
         """
         ---------------------------------------------------------
-        Auxillary function for is_identical_r
+        Auxillary functions for is_identical_r
         Use: b = _is_identical_r_aux(source_node, target_node)
         -------------------------------------------------------
         Parameters:
@@ -842,7 +842,7 @@ class List:
     def _split_alt_r_aux(self, target1, target2):
         """
         -------------------------------------------------------
-        Auxillary function for split_alt_r
+        Auxillary functions for split_alt_r
         Use: _split_alt_r_aux(target1, target2)
         -------------------------------------------------------
         Parameters:
@@ -893,7 +893,7 @@ class List:
     def _linear_search_r_aux(self, key, current, previous, index):
         """
         -------------------------------------------------------
-        Auxiliary function for _linear_search_r
+        Auxiliary functions for _linear_search_r
         -------------------------------------------------------
         Parameters:
             key - a partial data element (?)
@@ -979,7 +979,7 @@ class List:
     def _intersection_r_aux(self, source1_node, source2):
         """
         -------------------------------------------------------
-        Auxiliary function for intersection_r
+        Auxiliary functions for intersection_r
         -------------------------------------------------------
         Parameters:
             source1_node - a node in source1 (List._Node)
@@ -1071,7 +1071,7 @@ class List:
     def _union_r_aux(self, source1_node):
         """
         -------------------------------------------------------
-        Auxiliary function for union_r
+        Auxiliary functions for union_r
         -------------------------------------------------------
         Parameters:
             source1_node - a node in source1 (List._Node)

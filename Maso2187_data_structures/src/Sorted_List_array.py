@@ -496,7 +496,7 @@ class Sorted_List:
         -------------------------------------------------------
         Split a List into two parts. target1 contains the even indexed
         elements, target2 contains the odd indexed elements.
-        source is empty after the function executes.
+        source is empty after the functions executes.
         (iterative version)
         Use: target1, target2 = source.split_alt()
         -------------------------------------------------------
@@ -530,7 +530,7 @@ class Sorted_List:
         Use: target1, target2 = source.split_apply(func)
         -------------------------------------------------------
         Parameters:
-            func - a function that given a value in the list returns
+            func - a functions that given a value in the list returns
                 True for some condition, otherwise returns False.
         Returns:
             target1 - a new List with values where func(value) is True (List)

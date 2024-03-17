@@ -187,12 +187,12 @@ class List:
     def apply(self, func):
         """
         -------------------------------------------------------
-        Applies an external function to every value in list.
+        Applies an external functions to every value in list.
         Use: source.apply(func)
         -------------------------------------------------------
         Parameters:
-          func - a function that takes a single value as a parameter
-              and returns a value (function)
+          func - a functions that takes a single value as a parameter
+              and returns a value (functions)
         Returns:
             None
         -------------------------------------------------------
@@ -659,7 +659,7 @@ class List:
         Use: target1, target2 = source.split_apply(func)
         -------------------------------------------------------
         Parameters:
-            func - a function that given a value in the list returns
+            func - a functions that given a value in the list returns
                 True for some condition, otherwise returns False.
         Returns:
             target1 - a new List with values where func(value) is True (List)

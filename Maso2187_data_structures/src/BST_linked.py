@@ -10,7 +10,6 @@ __updated__ = "2023-07-11"
 """
 # Imports
 from copy import deepcopy
-import re
 
 
 class _BST_Node:
@@ -310,6 +309,8 @@ class BST:
 
         # your code here
 
+        value = self.retrieve(key)
+        return value is not None
 
     def height(self):
         """
@@ -395,6 +396,25 @@ class BST:
 
 
         # your code here
+        node = self._root
+        parent = None
+        found = False
+
+        while node is not None and not found:
+            if key < node._value:
+                parent = node
+                node = node._left
+            elif key > node._value:
+                parent = node
+                node = node._right
+            else:
+                found = True
+
+        if parent is None or not found:
+            value = None
+        else:
+            value = deepcopy(parent._value)
+        return value
 
 
     def parent_r(self, key):
@@ -413,6 +433,39 @@ class BST:
 
 
         # your code here
+
+
+        return self._parent_r_aux(self._root, key, None)
+
+    def _parent_r_aux(self, node, key, parent):
+        """
+        ---------------------------------------------------------
+        Returns the value of the parent node in a bst given a key.
+        Private recursive operation called only by parent_r.
+        ---------------------------------------------------------
+        Parameters:
+            node - a bst node (BST_Node)
+            key - a key value (?)
+            parent - the parent node of the current node (BST_Node)
+        Returns:
+            value - a copy of the value in a node that is the parent of the
+            key node, None if the key is not found.
+        ---------------------------------------------------------
+        """
+
+        # your code here
+
+        if node is None:
+            value = None
+        elif key < node._value:
+            value = self._parent_r_aux(node._left, key, node)
+        elif key > node._value:
+            value = self._parent_r_aux(node._right, key, node)
+        elif parent is None:
+            value = None
+        else:
+            value = deepcopy(parent._value)
+        return value
 
 
     def max(self):
@@ -620,6 +673,52 @@ class BST:
         """
 
         # your code here
+
+        zero, one, two = self._node_counts_aux(self._root)
+
+        return zero, one, two
+
+    def _node_counts_aux(self, current):
+        """
+        ---------------------------------------------------------
+        Helper functions for node_counts.
+        ---------------------------------------------------------
+        Parameters:
+            current - a bst node (BST_Node)
+        Returns:
+            zero - number of nodes with zero children in current's subtree (int)
+            one - number of nodes with one child in current's subtree (int)
+            two - number of nodes with two children in current's subtree (int)
+        ---------------------------------------------------------
+        """
+
+        # your code here
+
+        if current is None:
+            zero = 0
+            one = 0
+            two = 0
+        elif current._left is None and current._right is None:
+            zero = 1
+            one = 0
+            two = 0
+        elif current._left is not None and current._right is not None:
+            zero = 0
+            one = 0
+            two = 1
+        else:
+            zero = 0
+            one = 1
+            two = 0
+
+        zero_left, one_left, two_left = self._node_counts_aux(current._left)
+        zero_right, one_right, two_right = self._node_counts_aux(current._right)
+
+        zero += zero_left + zero_right
+        one += one_left + one_right
+        two += two_left + two_right
+
+        return zero, one, two
 
 
     def is_balanced(self):

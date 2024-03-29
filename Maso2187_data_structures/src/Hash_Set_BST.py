@@ -12,7 +12,7 @@ __updated__ = "2023-05-07"
 
 # Imports
 # Use any appropriate data structure here.
-from List_array import List
+from BST_linked import BST
 
 # Constants
 SEP = "-" * 40
@@ -45,7 +45,7 @@ class Hash_Set:
 
         # Define the empty table.
         for _ in range(self._capacity):
-            self._table.append(List())
+            self._table.append(BST())
 
     def __len__(self):
         """
@@ -121,7 +121,7 @@ class Hash_Set:
 
         if value not in slot:
             inserted = True
-            slot.append(value)
+            slot.insert(value)
             self._count += 1
 
             if self._count > (Hash_Set._LOAD_FACTOR * self._capacity):
@@ -189,7 +189,7 @@ class Hash_Set:
 
         # Fill the new table with empty lists
         for _ in range(self._capacity):
-            temp_table.append(List())
+            temp_table.append(BST())
 
         # Copy the old data into the new table
         while len(self._table) > 0:
@@ -197,7 +197,7 @@ class Hash_Set:
 
             for i in old_slot:
                 slot = hash(i) % self._capacity
-                temp_table[slot].append(i)
+                temp_table[slot].insert(i)
         self._table = temp_table
         
         return

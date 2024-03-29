@@ -1,0 +1,33 @@
+"""
+-------------------------------------------------------
+Lab/Assignment  Testing
+-------------------------------------------------------
+Author:  Roan Somers Mason
+ID:      169072187
+Email:   maso2187@mylaurier.ca
+Version: yyyy-mm-dd
+-------------------------------------------------------
+"""
+-------------------------------------------------------
+t01
+-------------------------------------------------------
+Using array-based list Hash_Set
+
+Total Comparisons: 935,141
+Word with maximum comparisons 'the': 13,602
+
+-------------------------------------------------------
+t02
+-------------------------------------------------------
+Using array-based Sorted List Hash_Set
+
+Total Comparisons: 1,051,844
+Word with maximum comparisons 'the': 22,711
+
+-------------------------------------------------------
+t03
+-------------------------------------------------------
+Using linked BST Hash_Set
+
+Total Comparisons: 1,255,514
+Word with maximum comparisons 'the': 39,742

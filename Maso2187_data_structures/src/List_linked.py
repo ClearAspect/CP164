@@ -1167,7 +1167,19 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+
+        target1 = List()
+        target2 = List()
+
+        while self._front is not None:
+            value = self._front._value
+            if value <= key:
+                target1._move_front_to_rear(self)
+            else:
+                target2._move_front_to_rear(self)
+
+
+        return target1, target2
 
     def copy(self):
         """
@@ -1348,12 +1360,12 @@ class List:
             self._rear._next = list._front
         self._rear = list._rear
         self._count += list._count
-        
+
         # Clear the original list so that it is empty
         list._front = None
         list._rear = None
         list._count = 0
-        
+
         return
 
     def __iter__(self):

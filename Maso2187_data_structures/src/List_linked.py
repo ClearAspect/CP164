@@ -1181,7 +1181,9 @@ class List:
         -------------------------------------------------------
         """
         # your code here
-        return
+
+        new_list = deepcopy(self)
+        return new_list
 
     def copy_r(self):
         """
@@ -1308,8 +1310,7 @@ class List:
         """
         # your code here
         return
-    
-    
+
     def clear(self):
         """
         -------------------------------------------------------
@@ -1325,6 +1326,34 @@ class List:
         self._front = None
         self._rear = None
         self._count = 0
+        return
+
+    def _append_list(self, list):
+        """
+        -------------------------------------------------------
+        Helper method to append a list of values to the current list.
+        Use: self._append_list(value)
+        -------------------------------------------------------
+        Parameters:
+            value - a linked list of values (List)
+        Returns:
+            None
+        -------------------------------------------------------
+        """
+        # your code here
+
+        if self._front is None:
+            self._front = list._front
+        if self._rear is not None:
+            self._rear._next = list._front
+        self._rear = list._rear
+        self._count += list._count
+        
+        # Clear the original list so that it is empty
+        list._front = None
+        list._rear = None
+        list._count = 0
+        
         return
 
     def __iter__(self):

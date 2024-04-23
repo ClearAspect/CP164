@@ -483,6 +483,16 @@ class BST:
         # your code here
 
 
+        current = self._root
+
+        while current._right is not None:
+            current = current._right
+
+
+        value = deepcopy(current._value)
+        return value
+
+
     def max_r(self):
         """
         ---------------------------------------------------------
@@ -674,11 +684,15 @@ class BST:
 
         # your code here
 
-        zero, one, two = self._node_counts_aux(self._root)
+        zero = 0
+        one = 0
+        two = 0
+
+        zero, one, two = self._node_counts_aux(self._root, zero, one, two)
 
         return zero, one, two
 
-    def _node_counts_aux(self, current):
+    def _node_counts_aux(self, current, zero, one, two):
         """
         ---------------------------------------------------------
         Helper functions for node_counts.
@@ -694,29 +708,21 @@ class BST:
 
         # your code here
 
-        if current is None:
-            zero = 0
-            one = 0
-            two = 0
-        elif current._left is None and current._right is None:
-            zero = 1
-            one = 0
-            two = 0
-        elif current._left is not None and current._right is not None:
-            zero = 0
-            one = 0
-            two = 1
-        else:
-            zero = 0
-            one = 1
-            two = 0
+        
 
-        zero_left, one_left, two_left = self._node_counts_aux(current._left)
-        zero_right, one_right, two_right = self._node_counts_aux(current._right)
-
-        zero += zero_left + zero_right
-        one += one_left + one_right
-        two += two_left + two_right
+        if current is not None:
+            if current._left is None and current._right is None:
+                zero += 1
+            elif current._left is None:
+                one += 1
+                zero, one, two = self._node_counts_aux(current._right, zero, one, two)
+            elif current._right is None:
+                one += 1
+                zero, one, two = self._node_counts_aux(current._left, zero, one, two)
+            else:
+                two += 1
+                zero, one, two = self._node_counts_aux(current._left, zero, one, two)
+                zero, one, two = self._node_counts_aux(current._right, zero, one, two)
 
         return zero, one, two
 

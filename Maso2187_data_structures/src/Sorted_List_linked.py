@@ -11,6 +11,7 @@ __updated__ = "2023-05-07"
 
 # Imports
 from copy import deepcopy
+import math
 
 
 class _SL_Node:
@@ -626,8 +627,17 @@ class Sorted_List:
         """
 
         # your code here
+        target1 = Sorted_List()
+        target2 = Sorted_List()
+        left = True
 
-        return
+        while self._front is not None:
+            if left:
+                target1._move_front_to_rear(self)
+            else:
+                target2._move_front_to_rear(self)
+            left = not left
+        return target1, target2
 
     def split(self):
         """
@@ -644,7 +654,17 @@ class Sorted_List:
 
         # your code here
 
-        return
+        target1 = Sorted_List()
+        target2 = Sorted_List()
+        mid = math.ceil(self._count / 2)
+
+        for i in range(mid):
+            target1._move_front_to_rear(self)
+
+        while self._front is not None:
+            target2._move_front_to_rear(self)
+
+        return target1, target2
 
     def __eq__(self, target):
         """

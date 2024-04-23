@@ -98,7 +98,10 @@ class Hash_Set:
         -------------------------------------------------------
         """
         # your code here
-        return
+
+        slot = self._find_slot(key)
+
+        return key in slot
 
     def insert(self, value):
         """
@@ -143,7 +146,13 @@ class Hash_Set:
         """
         # your code here
 
-        return
+        slot = self._find_slot(key)
+        value = None
+
+        if key in slot:
+            value = slot.find(key)
+
+        return value
 
     def remove(self, key):
         """

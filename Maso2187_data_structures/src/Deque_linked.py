@@ -267,37 +267,24 @@ class Deque:
             if l._next == r:
                 # Swap _prev and _next pointers
                 l._next = r_next
+                r._prev = l_prev
+                if l._next:
+                    l._next._prev = l
+                if r._prev:
+                    r._prev._next = r
                 l._prev = r
                 r._next = l
-                r._prev = l_prev
-
-                # Update _prev and _next pointers of nodes around l and r
-                if r_next is not None:
-                    r_next._prev = l
-                if l_prev is not None:
-                    l_prev._next = r
-                if self._front == l:
-                    self._front = r
-                if self._rear == r:
-                    self._rear = l
 
             elif l._prev == r:
                 # Swap _prev and _next pointers
-                l._next = r
-                l._prev = r_prev
                 r._next = l_next
+                l._prev = r_prev
+                if r._next:
+                    r._next._prev = r
+                if l._prev:
+                    l._prev._next = l
                 r._prev = l
-
-                # Update _prev and _next pointers of nodes around l and r
-                if l_next is not None:
-                    l_next._prev = r
-                if r_prev is not None:
-                    r_prev._next = l
-                if self._front == r:
-                    self._front = l
-                if self._rear == l:
-                    self._rear = r
-
+                l._next = r
             else:
                 # Swap _prev and _next pointers
                 l._prev = r_prev

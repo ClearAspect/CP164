@@ -640,6 +640,72 @@ class Sorts:
                 found = True
         return mid
 
+    
+    @staticmethod
+    def radix_sort(a):
+        """
+        -------------------------------------------------------
+        Performs a base 10 radix sort.
+        Use: Sorts.radix_sort(a)
+        -------------------------------------------------------
+        Parameters:
+            a - an array of base 10 integers (list)
+        Returns:
+            None
+        -------------------------------------------------------
+        """
+
+
+        buckets = [list() for _ in range(10)]
+        
+        # sort the array based on the least significant digit
+        while len(a) > 0:
+            buckets[a[0] % 10].append(a.pop(0))
+            
+
+        # Concatenate the buckets
+        for i in range(10):
+            a.extend(buckets[i])
+            buckets[i] = []
+
+
+        while len(a) > 0:
+            buckets[(a[0] // 10)%10].append(a.pop(0))
+
+        # Concatenate the buckets
+        for i in range(10):
+            a.extend(buckets[i])
+            buckets[i] = []
+       
+        return
+
+
+    @staticmethod
+    def gnome_sort(a):
+        """
+        -------------------------------------------------------
+        Sorts an array using the Gnome Sort algorithm.
+        Use: gnome_sort(a)
+        -------------------------------------------------------
+        Parameters:
+            a - an array of comparable elements (list)
+        Returns:
+            None
+        -------------------------------------------------------
+        """
+        current_index = 0
+        length = len(a)
+
+        while current_index < length:
+            if current_index == 0 or a[current_index] >= a[current_index - 1]:
+                current_index += 1
+            else:
+                Sorts._swap(a, current_index, current_index - 1)
+                current_index -= 1
+
+        return
+
+
     # Sort Utilities
 
     @staticmethod
@@ -711,3 +777,4 @@ class Sorts:
 
         a[i] = a[j]
         return
+

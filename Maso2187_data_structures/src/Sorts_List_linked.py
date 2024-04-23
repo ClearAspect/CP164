@@ -25,6 +25,7 @@ class Sorts:
     Use: Sorts.swaps = 0
     -------------------------------------------------------
     """
+
     swaps = 0  # Tracks swaps performed.
 
     # The Sorts
@@ -99,7 +100,6 @@ class Sorts:
             swapped = a._front
 
             while curr is not last and curr._next is not None:
-
                 if curr._value > curr._next._value:
                     # If you swapped you need another pass.
                     done = False
@@ -262,7 +262,6 @@ class Sorts:
     def _merge(target, left, right):
         # Traverse left and right appending larger value to rear of target.
         while left._front is not None and right._front is not None:
-
             if left._front._value <= right._front._value:
                 target._move_front_to_rear(left)
             else:
@@ -273,6 +272,40 @@ class Sorts:
             target._append_list(left)
         elif right._front is not None:
             target._append_list(right)
+        return
+
+    @staticmethod
+    def radix_sort(a):
+        """
+        -------------------------------------------------------
+        Performs a base 10 radix sort.
+        Use: radix_sort(a)
+        -------------------------------------------------------
+        Parameters:
+            a - a List of base 10 integers (List)
+        Returns:
+            None
+        -------------------------------------------------------
+        """
+        buckets = [list() for _ in range(10)]
+
+        # sort the array based on the least significant digit
+        while len(a) > 0:
+            buckets[a[0] % 10].append(a.pop(0))
+
+        # Concatenate the buckets
+        for i in range(10):
+            while len(buckets[i]) > 0:
+                a.append(buckets[i].pop(0))
+
+        while len(a) > 0:
+            buckets[(a[0] // 10) % 10].append(a.pop(0))
+
+        # Concatenate the buckets
+        for i in range(10):
+            while len(buckets[i]) > 0:
+                a.append(buckets[i].pop(0))
+
         return
 
     # Sort Utilities
@@ -301,23 +334,21 @@ class Sorts:
     @staticmethod
     def is_sorted(a):
         """
+         -------------------------------------------------------
+         Determines whether an array is sorted or not.
+         Use: srtd = Sorts.is_sorted(a)
+         -------------------------------------------------------
+         Parameters:
+             a - an array of comparable elements (?)
+         Returns:
+             srtd - True if contents of a are sorted,
+                 False otherwise (boolean)
         -------------------------------------------------------
-        Determines whether an array is sorted or not.
-        Use: srtd = Sorts.is_sorted(a)
-        -------------------------------------------------------
-        Parameters:
-            a - an array of comparable elements (?)
-        Returns:
-            srtd - True if contents of a are sorted,
-                False otherwise (boolean)
-       -------------------------------------------------------
         """
         srtd = True
         curr = a._front
 
-        while srtd and curr is not None and \
-                curr._next is not None:
-
+        while srtd and curr is not None and curr._next is not None:
             if curr._value <= curr._next._value:
                 curr = curr._next
             else:
@@ -346,8 +377,7 @@ class Sorts:
 
     @staticmethod
     def pr(a):
-        print(a._count, "-", [v for v in a], "-",
-              a._front._value, "-", a._rear._value)
+        print(a._count, "-", [v for v in a], "-", a._front._value, "-", a._rear._value)
         return
 
     @staticmethod
